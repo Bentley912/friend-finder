@@ -3,6 +3,10 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
+var apiRoutes = require("./routing/apiRoutes");
+var htmlRoutes= require("./routing/htmlRoutes");
+var friends = require("./data/friends.js");
+
 
 // Sets up the Express App
 // =============================================================
@@ -14,16 +18,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+htmlRoutes(app);
+apiRoutes(app);
+friends(app);
+
 
 // Routing 
 //==============================================================
-app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "/public/home.html"));
-});
 
-app.get("/survey", function(req, res) {
-  res.sendFile(path.join(__dirname, "/public/survey.html"));
-});
 
 // Starts the server to begin listening
 // =============================================================
